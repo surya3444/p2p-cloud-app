@@ -27,6 +27,14 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// ✨ THE DEFINITIVE FIX - PART 1: A DEDICATED HEALTH CHECK ENDPOINT ✨
+// This route is specifically for Render's health check.
+// It's simple and has no dependencies, ensuring a fast, reliable response.
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 const server = http.createServer(app);
 const PORT = process.env.PORT || 8000;
 
