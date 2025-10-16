@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head><title>Client</title></head>
+<body>
+    <h1>Client Page</h1>
+    <p>Status: <b id="status">Waiting for host...</b></p>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-peer@9.11.1/simplepeer.min.js"></script>
+    <script>
+        const socket = io('http://localhost:8000');
+        const statusEl = document.getElementById('status');
+        let peer;
+
+        const roomId = prompt("Please enter the Share ID from the Host page:");
+        if (roomId) {
+            socket.emit('join-room', roomId);
+        }
+
+        socket.on('offer', payload => {
+            // ✨ FINAL FIX: Ignore if we receive our own offer event
+            if (payload.from === socket.id) return;
+
+            statusEl.textContent = "Received offer. Creating answer...";
+            peer = new SimplePeer({ initiator: false, trickle: false });
+
+            peer.on('signal', answer => {
+                socket.emit('answer', { from: socket.id, roomId: roomId, signal: answer });
+            });
+
+            peer.on('connect', () => {
+                statusEl.textContent = "✅ CONNECTION ESTABLISHED!";
+            });
+            
+            peer.on('error', err => {
+                statusEl.textContent = `❌ ERROR: ${err.message}`;
+            });
+            
+            peer.signal(payload.signal);
+        });
+    </script>
+</body>
+</html>

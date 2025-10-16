@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head><title>Host</title></head>
+<body>
+    <h1>Host Page</h1>
+    <p>Your Share ID is: <b id="shareId">...</b></p>
+    <p>Status: <b id="status">Waiting for client...</b></p>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-peer@9.11.1/simplepeer.min.js"></script>
+    <script>
+        const socket = io('http://localhost:8000');
+        const statusEl = document.getElementById('status');
+        let peer;
+
+        socket.on('connect', () => {
+            document.getElementById('shareId').textContent = socket.id;
+            socket.emit('join-room', socket.id);
+        });
+
+        socket.on('peer-joined', (payload) => {
+            // ✨ FINAL FIX: Ignore if we receive our own join event
+            if (payload.peerId === socket.id) return;
+
+            statusEl.textContent = "Client joined. Creating P2P connection...";
+            peer = new SimplePeer({ initiator: true, trickle: false });
+
+            peer.on('signal', offer => {
+                socket.emit('offer', { from: socket.id, roomId: socket.id, signal: offer });
+            });
+
+            peer.on('connect', () => {
+                statusEl.textContent = "✅ CONNECTION ESTABLISHED!";
+            });
+            
+            peer.on('error', err => {
+                statusEl.textContent = `❌ ERROR: ${err.message}`;
+            });
+        });
+
+        socket.on('answer', payload => {
+            // ✨ FINAL FIX: Ignore if we receive our own answer event
+            if (payload.from === socket.id) return;
+            peer.signal(payload.signal);
+        });
+    </script>
+</body>
+</html>

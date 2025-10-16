@@ -1,0 +1,136 @@
+/* client/src/App.css */
+
+
+.host-button {
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  background-color: #61dafb;
+  cursor: pointer;
+  margin-top: 20px;
+}
+/* frontend/src/App.css */
+
+
+.auth-form h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.auth-form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.auth-form button {
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  background-color: #61dafb;
+  color: #282c34;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.auth-message {
+  text-align: center;
+  margin-top: 15px;
+}
+/* frontend/src/App.css */
+.host-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.status-text {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 30px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.action-button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.action-button:hover {
+  background-color: #0056b3;
+}
+/* frontend/src/App.css */
+
+/* --- AUTHENTICATION STYLES --- */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f4f7f6; /* Match the main app background */
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  background-color: #ffffff; /* Clean white card */
+  border-radius: 10px;
+  color: #282c34; /* Dark text for readability */
+  min-width: 350px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+}
+
+.auth-form h2 {
+  margin-top: 0;
+  text-align: center;
+  color: #333;
+}
+
+.auth-form input {
+  margin-bottom: 15px;
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.auth-form button {
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff; /* Match the new action button color */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.auth-form button:hover {
+  background-color: #0056b3;
+}
+
+.auth-message {
+  text-align: center;
+  margin-top: 15px;
+}
