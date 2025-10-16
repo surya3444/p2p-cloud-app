@@ -40,9 +40,18 @@ const PORT = process.env.PORT || 8000;
 
 // --- DATABASE CONNECTION ---
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('✅ MongoDB connected successfully.'))
-    .catch(err => console.error('❌ MongoDB connection error:', err));
-
+  .then(() => {
+    console.log('✅ MongoDB connected successfully.');
+    // Now that the database is ready, we can start listening for traffic.
+    server.listen(PORT, '0.0.0.0', () => {
+        console.log(`🚀 Server is live on port ${PORT}`);
+        console.log('PeerJS server is running at /myapp');
+    });
+  })
+  .catch(err => {
+    console.error('❌ MongoDB connection error. Server not started.', err);
+    process.exit(1); // Exit the process with an error code
+  });
 // --- USER SCHEMA ---
 const UserSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -214,7 +223,4 @@ io.on('connection', (socket) => {
 });
 
 // --- START THE SERVER ---
-server.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 Server is live on port ${PORT}`);
-    console.log('PeerJS server is running at /myapp');
-});
+
