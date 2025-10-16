@@ -39,19 +39,24 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 8000;
 
 // --- DATABASE CONNECTION ---
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('✅ MongoDB connected successfully.');
-    // Now that the database is ready, we can start listening for traffic.
-    server.listen(PORT, '0.0.0.0', () => {
-        console.log(`🚀 Server is live on port ${PORT}`);
-        console.log('PeerJS server is running at /myapp');
-    });
-  })
-  .catch(err => {
-    console.error('❌ MongoDB connection error. Server not started.', err);
-    process.exit(1); // Exit the process with an error code
-  });
+const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) {
+    return; // Already connected
+  }
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('✅ MongoDB connected on-demand.');
+  } catch (err) {
+    console.error('❌ MongoDB on-demand connection error:', err);
+    process.exit(1); // Exit if DB connection fails
+  }
+};
+
+// Middleware to ensure DB is connected before handling API requests
+const ensureDbConnection = async (req, res, next) => {
+  await connectDB();
+  next();
+};
 // --- USER SCHEMA ---
 const UserSchema = new mongoose.Schema({
     name: { type: String, required: true },
