@@ -206,7 +206,7 @@ io.on('connection', (socket) => {
 });
 
 // --- START THE SERVER ---
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Server is live on port ${PORT}`);
     console.log('PeerJS server is running at /myapp');
 });
