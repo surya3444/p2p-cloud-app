@@ -27,36 +27,14 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
-
-// ✨ THE DEFINITIVE FIX - PART 1: A DEDICATED HEALTH CHECK ENDPOINT ✨
-// This route is specifically for Render's health check.
-// It's simple and has no dependencies, ensuring a fast, reliable response.
-app.get('/health', (req, res) => {
-  res.status(200).send('OK');
-});
-
 const server = http.createServer(app);
 const PORT = process.env.PORT || 8000;
 
 // --- DATABASE CONNECTION ---
-const connectDB = async () => {
-  if (mongoose.connection.readyState >= 1) {
-    return; // Already connected
-  }
-  try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log('✅ MongoDB connected on-demand.');
-  } catch (err) {
-    console.error('❌ MongoDB on-demand connection error:', err);
-    process.exit(1); // Exit if DB connection fails
-  }
-};
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('✅ MongoDB connected successfully.'))
+    .catch(err => console.error('❌ MongoDB connection error:', err));
 
-// Middleware to ensure DB is connected before handling API requests
-const ensureDbConnection = async (req, res, next) => {
-  await connectDB();
-  next();
-};
 // --- USER SCHEMA ---
 const UserSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -228,4 +206,7 @@ io.on('connection', (socket) => {
 });
 
 // --- START THE SERVER ---
-
+server.listen(PORT, () => {
+    console.log(`🚀 Server is live on port ${PORT}`);
+    console.log('PeerJS server is running at /myapp');
+});
