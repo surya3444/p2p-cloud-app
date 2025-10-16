@@ -36,8 +36,13 @@ function Client() {
   useEffect(() => {
     if (!token) return;
 
-    const socket = io('http://localhost:8000');
-    const peer = new Peer({ host: 'localhost', port: 8000, path: '/myapp' });
+    const socket = io('https://p2p-cloud-server.onrender.com');
+    const peer = new Peer({
+  host: 'p2p-cloud-server.onrender.com', // Your Render server's domain
+  port: 443,                             // The standard HTTPS port
+  path: '/myapp',
+  secure: true                           // Crucial for live servers
+});
     peerRef.current = peer;
 
     peer.on('open', () => {
