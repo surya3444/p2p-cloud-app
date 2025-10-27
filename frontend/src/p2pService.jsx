@@ -16,7 +16,7 @@ class P2PService {
         if (this.socket) return;
         
         // 1. Get the live backend URL from your environment variables
-        const backendUrl = "https://p2pcloudapp-t33yuvp3.b4a.run";
+        const backendUrl = "https://p2p-backend-7ex8.onrender.com";
         
         // 2. Use the live URL for the connection
         this.socket = io(backendUrl);
