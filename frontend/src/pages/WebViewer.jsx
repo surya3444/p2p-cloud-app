@@ -13,9 +13,22 @@ function WebViewer() {
     const filePromises = useRef(new Map()); // Maps file paths to their Promise resolve/reject functions
 
     useEffect(() => {
-        const socket = io('http://localhost:8000');
-        const peer = new Peer({ host: 'localhost', port: 8000, path: '/myapp' });
+        // 1. Get the live backend URL from your environment variables
+const backendUrl = "https://p2pcloudapp-t33yuvp3.b4a.run";
 
+// 2. Extract just the hostname (e.g., "p2p-backend.up.railway.app")
+const peerHost = new URL(backendUrl).hostname;
+
+// 3. Update the Socket.IO connection to use the live URL
+const socket = io(backendUrl);
+
+// 4. Update the PeerJS connection for the live server
+const peer = new Peer({
+  host: peerHost,  // Your live domain
+  port: 443,       // The standard HTTPS port
+  path: '/myapp',
+  secure: true     // Must be true for live servers
+});
         // Helper function to request a file from the host and return a promise for its blob
         const getFile = (path) => {
             return new Promise((resolve, reject) => {
