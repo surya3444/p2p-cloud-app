@@ -21,7 +21,7 @@ function Verify() {
         }
 
         try {
-            const response = await fetch('http://localhost:8000/api/verify', {
+            const response = await fetch('https://p2p-backend-production-4e46.up.railway.app/api/verify', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, otp }),
