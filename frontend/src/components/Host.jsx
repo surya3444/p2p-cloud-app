@@ -41,8 +41,12 @@ function Host() {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    const socket = io('http://localhost:8000');
-    socketRef.current = socket;
+    // Get the live backend URL from your environment variables
+const backendUrl = "https://p2p-backend-production-4e46.up.railway.app/";
+
+// Update the Socket.IO connection to use the live URL
+const socket = io(backendUrl);
+socketRef.current = socket;
     
     const checkForSavedHandle = async () => {
       try {
@@ -59,8 +63,19 @@ function Host() {
     };
     checkForSavedHandle();
 
-    const peer = new Peer({ host: 'localhost', port: 8000, path: '/myapp' });
-    peerRef.current = peer;
+    // Get the live backend URL from your environment variables
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+// Extract just the hostname (e.g., "p2p-backend.up.railway.app")
+const peerHost = new URL(backendUrl).hostname;
+
+const peer = new Peer({
+  host: peerHost,  // Your live Railway domain
+  port: 443,       // The standard HTTPS port
+  path: '/myapp',
+  secure: true     // Must be true for live servers
+});
+peerRef.current = peer;
     
     peer.on('open', (peerId) => {
         console.log('✅ Host PeerJS is online with ID:', peerId);
