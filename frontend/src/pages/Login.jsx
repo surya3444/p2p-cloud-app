@@ -38,7 +38,7 @@ function Login() {
         e.preventDefault();
         setMessage('Logging in...');
         try {
-            const response = await fetch('https://p2pcloudapp-t33yuvp3.b4a.run/api/login', {
+            const response = await fetch('https://p2p-backend-production-4e46.up.railway.app/api/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
