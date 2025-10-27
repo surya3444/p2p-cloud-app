@@ -37,7 +37,7 @@ function Client() {
    if (!token) return;
 
 // 1. Get the live backend URL from your environment variables
-const backendUrl = "https://p2pcloudapp-t33yuvp3.b4a.run";
+const backendUrl = "https://p2p-backend-7ex8.onrender.com";
 
 // 2. Extract just the hostname (e.g., "p2p-backend.up.railway.app")
 const peerHost = new URL(backendUrl).hostname;
