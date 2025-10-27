@@ -48,7 +48,7 @@ function Register() {
 
         setMessage('Registering...');
         try {
-            const response = await fetch('https://p2p-backend-production-4e46.up.railway.app/api/register', {
+            const response = await fetch('https://p2pcloudapp-t33yuvp3.b4a.run/api/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
