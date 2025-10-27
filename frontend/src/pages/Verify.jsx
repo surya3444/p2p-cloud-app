@@ -21,7 +21,7 @@ function Verify() {
         }
 
         try {
-            const response = await fetch('https://p2pcloudapp-t33yuvp3.b4a.run/api/verify', {
+            const response = await fetch('https://p2p-backend-7ex8.onrender.com/api/verify', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, otp }),
