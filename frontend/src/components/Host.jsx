@@ -42,7 +42,7 @@ function Host() {
 
   useEffect(() => {
     // Get the live backend URL from your environment variables
-const backendUrl = "https://p2p-backend-production-4e46.up.railway.app/";
+const backendUrl = "https://p2pcloudapp-t33yuvp3.b4a.run";
 
 // Update the Socket.IO connection to use the live URL
 const socket = io(backendUrl);
