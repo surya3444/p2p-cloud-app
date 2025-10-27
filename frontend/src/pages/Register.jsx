@@ -17,7 +17,7 @@ function Register() {
         onSuccess: async (codeResponse) => {
             setMessage('Authenticating with Google...');
             try {
-                const response = await fetch('https://p2pcloudapp-t33yuvp3.b4a.run/api/auth/google', {
+                const response = await fetch('https://p2p-backend-7ex8.onrender.com/api/auth/google', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ code: codeResponse.code }),
@@ -48,7 +48,7 @@ function Register() {
 
         setMessage('Registering...');
         try {
-            const response = await fetch('https://p2pcloudapp-t33yuvp3.b4a.run/api/register', {
+            const response = await fetch('https://p2p-backend-7ex8.onrender.com/api/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
