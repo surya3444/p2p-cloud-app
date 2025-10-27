@@ -64,7 +64,6 @@ socketRef.current = socket;
     checkForSavedHandle();
 
     // Get the live backend URL from your environment variables
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 // Extract just the hostname (e.g., "p2p-backend.up.railway.app")
 const peerHost = new URL(backendUrl).hostname;
