@@ -17,7 +17,7 @@ function Register() {
         onSuccess: async (codeResponse) => {
             setMessage('Authenticating with Google...');
             try {
-                const response = await fetch('http://localhost:8000/api/auth/google', {
+                const response = await fetch('https://p2p-backend-production-4e46.up.railway.app/api/auth/google', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ code: codeResponse.code }),
@@ -48,7 +48,7 @@ function Register() {
 
         setMessage('Registering...');
         try {
-            const response = await fetch('http://localhost:8000/api/register', {
+            const response = await fetch('https://p2p-backend-production-4e46.up.railway.app/api/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
