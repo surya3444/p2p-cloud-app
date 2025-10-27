@@ -34,18 +34,33 @@ function Client() {
   const currentZippingFileRef = useRef({ path: null, chunks: [], size: 0 });
 
   useEffect(() => {
-    if (!token) return;
+   if (!token) return;
 
-    const socket = io('http://localhost:8000');
-    const peer = new Peer({ host: 'localhost', port: 8000, path: '/myapp' });
-    peerRef.current = peer;
+// 1. Get the live backend URL from your environment variables
+const backendUrl = "https://p2p-backend-production-4e46.up.railway.app/";
 
-    peer.on('open', () => {
-      setStatus('Finding your Host...');
-      socket.emit('find-my-host', { token }, (response) => {
+// 2. Extract just the hostname (e.g., "p2p-backend.up.railway.app")
+const peerHost = new URL(backendUrl).hostname;
+
+// 3. Update the Socket.IO connection to use the live URL
+const socket = io(backendUrl);
+
+// 4. Update the PeerJS connection for the live server
+const peer = new Peer({
+  host: peerHost,  // Your live domain
+  port: 443,       // The standard HTTPS port
+  path: '/myapp',
+  secure: true     // Tell it to use a secure connection
+});
+
+peerRef.current = peer;
+
+peer.on('open', () => {
+    setStatus('Finding your Host...');
+    socket.emit('find-my-host', { token }, (response) => {
         if (response.error) {
-          setStatus(`❌ Error: ${response.error}`);
-          return;
+            setStatus(`❌ Error: ${response.error}`);
+            return;
         }
 
         const conn = peer.connect(response.hostPeerId);
