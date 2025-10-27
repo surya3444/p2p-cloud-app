@@ -14,7 +14,13 @@ class P2PService {
 
     connect() {
         if (this.socket) return;
-        this.socket = io('http://localhost:8000');
+        
+        // 1. Get the live backend URL from your environment variables
+        const backendUrl = "https://p2pcloudapp-t33yuvp3.b4a.run";
+        
+        // 2. Use the live URL for the connection
+        this.socket = io(backendUrl);
+        
         this.socket.on('connect', () => {
             console.log('✅ Service connected to signaling server with ID:', this.socket.id);
         });
